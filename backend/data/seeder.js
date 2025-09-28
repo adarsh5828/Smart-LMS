@@ -54,11 +54,22 @@ console.log("Data is successfully added in to the database!")
     console.log("error while adding the data:", error);
 }
 
-const destrordata = () =>{
+
+
+
+
+}
+
+const destroydata = () =>{
     // deleteMany queries will go here!
     console.log("Data destroyed");
+    process.exit();
 }
+
 // logic to add scripts to run seed file for different methods
-
-
+if(process.argv[2]==='-d'){
+    destroydata();
+}else{
+    importData("import data");
+    console.log("import data")
 }
