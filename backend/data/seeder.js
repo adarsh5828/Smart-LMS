@@ -1,75 +1,90 @@
-
-import fs from 'fs';
+import fs from "fs";
 import Category from "../models/CategoryModel.js";
-import Course from "../models/courseModel.js"
+import Course from "../models/CourseModel.js";
 import User from "../models/UserModel.js";
-
+import path from "path";
+import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+dotenv.config();
+import connectDB from "../config/db.js";
+// connect to db
+connectDB();
+const __dirname = path.resolve();
 
 const importData = async () => {
-// clean the database
-try{
-    
-await Course.deleteMany();
-await Category.deleteMany();
-await User.deleteMany();
+  try {
+    console.log("Clearing database!");
+    // clean the database
+    await User.deleteMany();
+    await Course.deleteMany();
+    await Category.deleteMany();
 
-// insert the  data
-// insert user data
-const usersData = json.parse(fs.readFileSync(path.join(__dirname,'/data/users/json','utf-8')));
+    // insert the data
+    console.log("__dirname", __dirname);
 
-const UsersWithHashedPassword = usersData.map((user) => {
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(user.password,salt);
-    return {...user , password:hashedPassword};
+    // insert user data
+    const usersData = JSON.parse(
+      fs.readFileSync(path.join(__dirname, "/data/users.json"), "utf-8")
+    );
 
-});
+    const usersWithHashedPassword = usersData.map((user) => {
+      // create password hash
+      const salt = bcrypt.genSaltSync(10);
+      const hashedPassword = bcrypt.hashSync(user.password, salt);
+      return { ...user, password: hashedPassword };
+    });
 
-const createdUsers = await User.insertMany(UsersWithHashedPassword);
+    const createdUsers = await User.insertMany(usersWithHashedPassword);
 
-const instructorUser  = await createdUsers.find((user)=>user.role==='instructor'); // to be used in course as ref
+    const instructorUser = createdUsers.find(
+      (user) => user.role === "instructor"
+    ); // to be used in course as ref
 
-// insert category data
-const categoryData = json.parse(fs.readFileSync(path.join(__dirname,'/data/category/json','utf-8')));
+    // insert category data
+    const categoryData = JSON.parse(
+      fs.readFileSync(path.join(__dirname, "/data/category.json"), "utf-8")
+    );
+    const createdCategory = await Category.insertMany(categoryData);
 
-const createdCategory = await Category.insertMany(categoryData);
+    const webdevCategory = createdCategory.find(
+      (category) => category.name === "Web Dev"
+    ); // to be used in course as ref
 
-const webDevCategory = createdCategory.find((category)=> category.name==='Web Dev') ;
+    // insert course
+    const courses = [
+      {
+        title: "Complete Web dev course 2025",
+        description: "Random text about the course: command not found: asdfsdf",
+        price: 99,
+        instructor: instructorUser.id,
+        category: webdevCategory.id,
+      },
+    ];
 
-//insert Course
+    await Course.insertMany(courses);
 
-const Courses = [{
-    title:'Complete Web Development',
-    description:'Random Description about the Course is this',
-    price:99,
-    instructor:instructorUser.id,
-    category:webDevCategory.id
-}]
-
-await Category.insertMany(Courses);
-
-console.log("Data is successfully added in to the database!")
-
-
-} catch(error){
-    console.log("error while adding the data:", error);
-}
-
-
-
-
-
-}
-
-const destroydata = () =>{
-    // deleteMany queries will go here!
-    console.log("Data destroyed");
+    console.log("Data is successfully added to database!");
     process.exit();
-}
+  } catch (error) {
+    console.log("Error while adding data: ", error);
+    process.exit(1);
+  }
+};
+// remove data
+const destroyData = async () => {
+  // deleteMany queries will go here!
+  // clean the database
+  await User.deleteMany();
+  await Course.deleteMany();
+  await Category.deleteMany();
+  console.log("Data destroyed");
+  process.exit();
+};
 
-// logic to add scripts to run seed file for different methods
-if(process.argv[2]==='-d'){
-    destroydata();
-}else{
-    importData("import data");
-    console.log("import data")
+// logic to add script to run seed file for different methods
+if (process.argv[2] === "-d") {
+  destroyData();
+} else {
+  importData();
+  console.log("import data");
 }
