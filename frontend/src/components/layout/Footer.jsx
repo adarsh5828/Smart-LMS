@@ -1,58 +1,66 @@
-function Footer() {
+import { Link } from "react-router-dom";
+
+export default function Footer() {
   return (
-    <footer className="bg-dark text-light pt-5 pb-3 mt-auto">
+    <footer className="bg-dark text-light pt-4 pb-3 mt-auto">
       <div className="container">
-        <div className="row text-center text-md-start">
-          
-          {/* Brand + About + Social Icons */}
-          <div className="col-md-4 mb-4">
-            <h5 className="fw-bold text-primary">SmartLMS</h5>
+        <div className="row">
+          {/* Brand */}
+          <div className="col-md-3 mb-4">
+            <h5 className="fw-bold text-primary">Smart LMS</h5>
             <p className="small">
-              Empower your learning journey with our curated courses from top educators.
+              A modern learning management system to make education simple,
+              engaging, and accessible.
             </p>
-            {/* Social Icons */}
-            <div className="d-flex justify-content-center justify-content-md-start gap-3 fs-5 mt-3">
-              <a href="#" className="text-light" aria-label="Facebook">
-                <i className="bi bi-facebook"></i>
-              </a>
-              <a href="#" className="text-light" aria-label="Twitter">
-                <i className="bi bi-twitter"></i>
-              </a>
-              <a href="#" className="text-light" aria-label="Instagram">
-                <i className="bi bi-instagram"></i>
-              </a>
-              <a href="#" className="text-light" aria-label="LinkedIn">
-                <i className="bi bi-linkedin"></i>
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
-          <div className="col-md-4 mb-4">
+          <div className="col-md-3 mb-4">
             <h6 className="fw-bold">Quick Links</h6>
             <ul className="list-unstyled">
-              <li><a href="/" className="text-light text-decoration-none">Home</a></li>
-              <li><a href="/courses" className="text-light text-decoration-none">Courses</a></li>
+              <li><Link to="/" className="text-light text-decoration-none">Home</Link></li>
+              <li><Link to="/courses" className="text-light text-decoration-none">Courses</Link></li>
+              <li><Link to="/dashboard" className="text-light text-decoration-none">Dashboard</Link></li>
+              <li><Link to="/login" className="text-light text-decoration-none">Login</Link></li>
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div className="col-md-4 mb-4">
+          {/* Contact Us */}
+          <div className="col-md-3 mb-4">
             <h6 className="fw-bold">Contact Us</h6>
-            <p className="mb-1 small"><i className="bi bi-geo-alt-fill me-2"></i>Cyberpark, Gurugram</p>
-            <p className="mb-1 small"><i className="bi bi-envelope-fill me-2"></i>info@smartlms.com</p>
-            <p className="mb-0 small"><i className="bi bi-telephone-fill me-2"></i>+1 999 999 999</p>
+            <ul className="list-unstyled small">
+              <li>
+                <i className="bi bi-envelope-fill me-2 text-primary"></i>
+                support@smartlms.com
+              </li>
+              <li>
+                <i className="bi bi-telephone-fill me-2 text-primary"></i>
+                +91 98765 43210
+              </li>
+              <li>
+                <i className="bi bi-geo-alt-fill me-2 text-primary"></i>
+                New Delhi, India
+              </li>
+            </ul>
+          </div>
+
+          {/* Social Media */}
+          <div className="col-md-3 mb-4">
+            <h6 className="fw-bold">Follow Us</h6>
+            <div className="d-flex gap-3">
+              <a href="#" className="text-light fs-5"><i className="bi bi-facebook"></i></a>
+              <a href="#" className="text-light fs-5"><i className="bi bi-twitter"></i></a>
+              <a href="#" className="text-light fs-5"><i className="bi bi-linkedin"></i></a>
+              <a href="#" className="text-light fs-5"><i className="bi bi-instagram"></i></a>
+            </div>
           </div>
         </div>
 
-        <hr className="border-secondary" />
-        <div className="text-center small">
-          &copy; {new Date().getFullYear()} SmartLMS. All rights reserved.
+        {/* Bottom Line */}
+        <div className="text-center pt-3 border-top border-secondary mt-3">
+          <small>© {new Date().getFullYear()} Smart LMS. All rights reserved.</small>
         </div>
       </div>
     </footer>
   );
 }
-
-export default Footer;
-

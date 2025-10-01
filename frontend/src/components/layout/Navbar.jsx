@@ -3,12 +3,11 @@ import { Link, NavLink } from 'react-router-dom';
 
 function Navbar() {
 return (
-<nav className="navbar navbar-expand-lg navbar-dark bg-primary px-3 shadow">
-<div className="container-fluid">
-{/* Brand */}
-<Link className="navbar-brand fw-bold" to="/">
-Smart LMS
-</Link>
+<nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div className="container">
+        <NavLink className="navbar-brand fw-bold text-primary" to="/">
+          Smart LMS
+        </NavLink>
 
 
 {/* Toggle Button for Mobile */}
