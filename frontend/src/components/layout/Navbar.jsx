@@ -1,74 +1,71 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink } from "react-router-dom";
+import {useAuth} from '../../context/AuthContext.jsx';
 
+export default function Navbar() {
+  const {user, logout} = useAuth();
 
-function Navbar() {
-return (
-<nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
       <div className="container">
-        <NavLink className="navbar-brand fw-bold text-primary" to="/">
+        {/* Brand */}
+        <Link className="navbar-brand fw-bold text-primary" to="/">
           Smart LMS
-        </NavLink>
+        </Link>
 
+        {/* Toggler (Mobile) */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-{/* Toggle Button for Mobile */}
-<button
-className="navbar-toggler"
-type="button"
-data-bs-toggle="collapse"
-data-bs-target="#navbarContent"
-aria-controls="navbarContent"
-aria-expanded="false"
-aria-label="Toggle navigation"
->
-<span className="navbar-toggler-icon"></span>
-</button>
-
-
-{/* Nav Links */}
-<div className="collapse navbar-collapse" id="navbarContent">
-<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-<li className="nav-item">
-<NavLink
-to="/"
-end
-className={({ isActive }) =>
-`nav-link ${isActive ? 'active fw-semibold' : ''}`
+        {/* Links */}
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/">
+                Home
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/courses">
+                Courses
+              </NavLink>
+            </li>
+            {/* conditional rendering for user login/logout */}
+            {user ? (
+              <li className="nav-item">
+                <span>Hi username</span>
+                <NavLink className="btn btn-primary ms-lg-3" onClick={logout} to="/">
+                  Logout
+                </NavLink>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <NavLink className="btn btn-primary ms-lg-3" to="/login">
+                  Login
+                </NavLink>
+              </li>
+            )}
+            {/* {user && (<li className="nav-item">
+              <NavLink className="btn btn-primary ms-lg-3" to="/login">
+                Logout
+              </NavLink>
+            </li>)}
+            {!user && (<li className="nav-item">
+              <NavLink className="btn btn-primary ms-lg-3" to="/login">
+                Login
+              </NavLink>
+            </li>)} */}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 }
->
-Home
-</NavLink>
-</li>
-
-
-<li className="nav-item">
-<NavLink
-to="/courses"
-className={({ isActive }) =>
-`nav-link ${isActive ? 'active fw-semibold' : ''}`
-}
->
-Courses
-</NavLink>
-</li>
-
-
-
-<li className="nav-item">
-<NavLink
-to="/login"
-className={({ isActive }) =>
-`nav-link ${isActive ? 'active fw-semibold' : ''}`
-}
->
-Login
-</NavLink>
-</li>
-</ul>
-</div>
-</div>
-</nav>
-);
-}
-
-
-export default Navbar;

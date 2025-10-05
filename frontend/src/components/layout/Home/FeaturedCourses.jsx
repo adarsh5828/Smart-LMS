@@ -41,7 +41,7 @@ const FeaturedCourses = () => {
             {courses.map((course) => (
               <div className="col-md-4" key={course._id}>
                 <Link
-                  to="/courses/1"
+                  to={"/courses/"+course._id}
                   className="text-decoration-none text-dark"
                 >
                   <div className="card h-100 shadow-lg border-0 position-relative">
@@ -65,7 +65,7 @@ const FeaturedCourses = () => {
                         <div className="d-flex justify-content-between align-items-center mb-2">
                           {/* Price */}
                           <span className="fw-bold text-primary">
-                            Rs. {course.price}
+                            ${course.price}
                           </span>
                           {/* Ratings */}
                           <div className="text-warning">

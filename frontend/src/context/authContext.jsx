@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user'); // storing user info in local storage
     }
 
-    return <AuthContext.Provider value={{user, setUser}}>
+    return <AuthContext.Provider value={{user,login,logout}}>
         {children}
     </AuthContext.Provider>
 }
