@@ -18,7 +18,7 @@ app.use(cors());
 app.use('/api/auth',authRoutes);  // goes to authRoute
 app.use('/api/courses',courseRoutes);
 app.use('/api/category',categoryRoutes);
-app.use('/api/payment',paymentRoutes); //payment
+app.use('/api/payment',paymentRoutes); //payment routes
 
 if(process.env.NODE_ENV === "dev"){
     app.use(morgan("dev"));
