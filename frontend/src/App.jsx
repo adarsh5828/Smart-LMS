@@ -4,6 +4,9 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import { Routes, Route } from 'react-router-dom';
 import Register from "./pages/register.jsx";
+import CourseDetailsPage from "./pages/courseDetailsPage.jsx";
+import PrivateRoute from "./components/layout/privateRoute.jsx";  
+import LearningPage from "./pages/learningPage.jsx";
 
 function App() {
   return (
@@ -14,10 +17,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/courses" element={<h1 className="text-center mt-5">Courses Page</h1>} />
+        <Route path="/courses/:id" element={<CourseDetailsPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/learning" element={<LearningPage />} />
+        </Route>
       </Routes>
       <Footer />
     </div>
   )
 }
 
-export default App
+export default App;
