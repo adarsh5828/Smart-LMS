@@ -1,4 +1,7 @@
-import Stripe from  "stripe";
+import Stripe from "stripe";
+import dotenv from "dotenv";
+
+dotenv.config(); // loads environment variables from .env file
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
