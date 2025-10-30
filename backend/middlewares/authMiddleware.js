@@ -7,7 +7,7 @@ export const authProtect = async (req,res,next)=>{
 if(!req.headers.authorization || !req.headers.authorization.startsWith('Bearer')){
     return res.status(401).json({message:"UnAuthorized, no token! "});
    
-}  try{
+}  try{ 
 const tokenArr = req.headers.authorization.split(' '); //[Bearer,token]
 const token = tokenArr[1];
 //decode the token
